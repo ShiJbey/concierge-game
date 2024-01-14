@@ -11,12 +11,19 @@ type AppProps = {
 };
 
 const App: React.FC<AppProps> = (props) => {
+    const handleSetupChange = (data: any): void => {
+        console.log(data);
+    };
+
     return (
         <Router>
             <div className="w-100 h-100 position-relative">
                 <Routes>
                     <Route path="/" element={<TitlePage />} />
-                    <Route path="/setup" element={<SetupPage />} />
+                    <Route
+                        path="/setup"
+                        element={<SetupPage game={props.game} />}
+                    />
                     <Route path="/tutorial" element={<TutorialPage />} />
                     <Route
                         path="/game"

@@ -12,6 +12,67 @@ export const HOTEL_REPUTATION_MIN = 0;
 export const GUEST_HAPPINESS_MAX = 100;
 export const GUEST_HAPPINESS_MIN = 0;
 
+/**
+ * An enumeration of the various guest membership levels
+ */
+export enum MembershipLevel {
+    NOT_REGISTERED,
+    BASIC,
+    PLUS,
+    ELITE,
+}
+
+/**
+ * The names of the guest membership levels
+ */
+export const MembershipLevelNames = Object.freeze([
+    'Not Registered',
+    'Basic',
+    'Plus',
+    'Elite',
+]);
+
+/**
+ * Choose a random membership level
+ * @returns
+ */
+function ChooseRandomRoomMembershipLevel(): MembershipLevel {
+    const levels = [
+        MembershipLevel.NOT_REGISTERED,
+        MembershipLevel.BASIC,
+        MembershipLevel.PLUS,
+        MembershipLevel.ELITE,
+    ];
+    return levels[Math.floor(Math.random() * levels.length)];
+}
+
+/**
+ * An enumeration of the various room quality levels
+ */
+export enum RoomQualityLevel {
+    BASIC,
+    PLUS,
+    DELUXE,
+}
+
+/**
+ * The names of the room quality levels
+ */
+export const RoomQualityLevelNames = Object.freeze(['Basic', 'Plus', 'Deluxe']);
+
+/**
+ * Choose a random room quality
+ * @returns
+ */
+function ChooseRandomRoomQuality(): RoomQualityLevel {
+    const levels = [
+        RoomQualityLevel.BASIC,
+        RoomQualityLevel.PLUS,
+        RoomQualityLevel.DELUXE,
+    ];
+    return levels[Math.floor(Math.random() * levels.length)];
+}
+
 export type GameConfig = {
     numRooms?: number;
 };
@@ -53,6 +114,14 @@ export class ConciergeGame {
         return this.m_currentDay;
     }
 
+    get FutureReservations(): Reservation[] {
+        return this.m_futureReservations;
+    }
+
+    get Guests(): Guest[] {
+        return this.m_guests;
+    }
+
     /**
      * Get the requests for this day.
      */
@@ -81,6 +150,10 @@ export class ConciergeGame {
         this.m_futureReservations.push(reservation);
     }
 
+    RemoveRequest(choiceIndex: number): void {
+        this.m_requestQueue.splice(choiceIndex, 1);
+    }
+
     /** Tick the game simulation by one time step */
     Tick() {
         this.m_currentDay += 1;
@@ -103,6 +176,7 @@ export class ConciergeGame {
                         true
                     )
                 );
+                this.m_futureReservations.splice(i, 1);
             }
         }
     }
@@ -113,15 +187,17 @@ export class Hotel {
     private m_numRooms: number;
     private m_rooms: Array<Room>;
     private m_reputation: number;
+    private m_currentGuests: Guest[];
 
     constructor(name: string, numRooms: number) {
         this.m_name = name;
         this.m_numRooms = numRooms;
         this.m_rooms = new Array(numRooms);
         for (let i = 0; i < numRooms; i++) {
-            this.m_rooms.push(new Room(i + 1, RoomQualityLevel.BASIC));
+            this.m_rooms[i] = new Room(i + 1, ChooseRandomRoomQuality());
         }
         this.m_reputation = 50;
+        this.m_currentGuests = [];
     }
 
     /**
@@ -143,6 +219,10 @@ export class Hotel {
      */
     get Reputation(): number {
         return this.m_reputation;
+    }
+
+    get CurrentGuests(): Guest[] {
+        return this.m_currentGuests;
     }
 
     /**
@@ -167,6 +247,30 @@ export class Hotel {
      */
     GetRoom(roomNumber: number): Room {
         return this.m_rooms[roomNumber - 1];
+    }
+
+    GetVacantRoomsOfQuality(roomQuality: RoomQualityLevel): Room[] {
+        const rooms: Room[] = [];
+
+        for (const room of this.m_rooms) {
+            if (room.Quality === roomQuality && !room.IsOccupied) {
+                rooms.push(room);
+            }
+        }
+
+        return rooms;
+    }
+
+    GetRoomsOfQuality(roomQuality: RoomQualityLevel): Room[] {
+        const rooms: Room[] = [];
+
+        for (const room of this.m_rooms) {
+            if (room.Quality === roomQuality) {
+                rooms.push(room);
+            }
+        }
+
+        return rooms;
     }
 
     /**
@@ -206,6 +310,13 @@ export class Hotel {
         if (guest.Room === null)
             throw new Error('Cannot check-out guest who does not have a room.');
 
+        for (let i = this.m_currentGuests.length - 1; i >= 0; i--) {
+            if (this.m_currentGuests[i].UID === guest.UID) {
+                this.m_currentGuests.splice(i, 1);
+                return;
+            }
+        }
+
         guest.Room.Guest = null;
         guest.Room = null;
         guest.Reservation = null;
@@ -217,39 +328,13 @@ export class Hotel {
     CheckInGuest(guest: Guest, room: Room): void {
         room.Guest = guest;
         guest.Room = room;
+        this.m_currentGuests.push(guest);
     }
 
     EvictGuest(guest: Guest): void {
         this.CheckOutGuest(guest);
         this.Reputation -= 3;
     }
-}
-
-/**
- * An enumeration of the various room quality levels
- */
-export enum RoomQualityLevel {
-    BASIC,
-    PLUS,
-    DELUXE,
-}
-
-/**
- * The names of the room quality levels
- */
-export const RoomQualityLevelNames = Object.freeze(['Basic', 'Plus', 'Deluxe']);
-
-/**
- * Choose a random room quality
- * @returns
- */
-function ChooseRandomRoomQuality(): RoomQualityLevel {
-    const levels = [
-        RoomQualityLevel.BASIC,
-        RoomQualityLevel.PLUS,
-        RoomQualityLevel.DELUXE,
-    ];
-    return levels[Math.floor(Math.random() * levels.length)];
 }
 
 /**
@@ -307,40 +392,6 @@ export class Room {
     set Guest(guest: Guest | null) {
         this.m_guest = guest;
     }
-}
-
-/**
- * An enumeration of the various guest membership levels
- */
-export enum MembershipLevel {
-    NOT_REGISTERED,
-    BASIC,
-    PLUS,
-    ELITE,
-}
-
-/**
- * The names of the guest membership levels
- */
-export const MembershipLevelNames = Object.freeze([
-    'Not Registered',
-    'Basic',
-    'Plus',
-    'Elite',
-]);
-
-/**
- * Choose a random membership level
- * @returns
- */
-function ChooseRandomRoomMembershipLevel(): MembershipLevel {
-    const levels = [
-        MembershipLevel.NOT_REGISTERED,
-        MembershipLevel.BASIC,
-        MembershipLevel.PLUS,
-        MembershipLevel.ELITE,
-    ];
-    return levels[Math.floor(Math.random() * levels.length)];
 }
 
 /**
@@ -603,7 +654,7 @@ export class Reservation {
     }
 
     get CheckOutDay(): number {
-        return this.CheckOutDay;
+        return this.m_checkOutDay;
     }
 }
 
@@ -915,7 +966,10 @@ export class CheckInRequest extends GuestRequest {
     }
 
     CanAccept(): boolean {
-        return false;
+        return (
+            this.m_guest.Game.Hotel.GetVacantRooms(RoomQualityLevel.BASIC)
+                .length > 0
+        );
     }
 
     Accept(): void {
@@ -1000,7 +1054,7 @@ export class ReservationRequest extends GuestRequest {
 
     CanAccept(): boolean {
         // Check if the hotel has a vacant room with the
-        return false;
+        return true;
     }
 
     Accept(): void {

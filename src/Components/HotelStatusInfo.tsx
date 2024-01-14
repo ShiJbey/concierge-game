@@ -12,7 +12,6 @@ type HotelStatusInfoProps = {
     maxPlusRooms: number;
     deluxeRooms: number;
     maxDeluxeRooms: number;
-    onButtonPress?: () => void;
 };
 
 const HotelStatusInfo: React.FC<HotelStatusInfoProps> = (props) => {
@@ -27,7 +26,7 @@ const HotelStatusInfo: React.FC<HotelStatusInfoProps> = (props) => {
             </div>
             <hr></hr>
             <div>
-                <h4>Rooms Filled</h4>
+                <h4>Vacant Rooms</h4>
                 <div>
                     <b>Basic:</b> {props.basicRooms} / {props.maxBasicRooms}
                 </div>

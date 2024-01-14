@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 
-const game = new ConciergeGame({ numRooms: 20 });
+const game = new ConciergeGame({ numRooms: 10 });
 
 game.Tick();
 
