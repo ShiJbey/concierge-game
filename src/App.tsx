@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import TitlePage from './Pages/TitlePage';
+import SetupPage from './Pages/SetupPage';
+import TutorialPage from './Pages/TutorialPage';
+import ConciergeDashboard from './Components/ConciergeDashboard';
+import { ConciergeGame } from './concierge';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+type AppProps = {
+    game: ConciergeGame;
+};
+
+const App: React.FC<AppProps> = (props) => {
+    return (
+        <Router>
+            <div className="w-100 h-100 position-relative">
+                <Routes>
+                    <Route path="/" element={<TitlePage />} />
+                    <Route path="/setup" element={<SetupPage />} />
+                    <Route path="/tutorial" element={<TutorialPage />} />
+                    <Route
+                        path="/game"
+                        element={<ConciergeDashboard game={props.game} />}
+                    />
+                </Routes>
+            </div>
+        </Router>
+    );
+};
 
 export default App;

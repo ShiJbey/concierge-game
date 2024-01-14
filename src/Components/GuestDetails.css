@@ -1,0 +1,9 @@
+
+.guest-details {
+  width: 80%;
+  height: 150px; /* Adjust as needed */
+  background-color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

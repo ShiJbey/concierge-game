@@ -1,0 +1,42 @@
+.title-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Take up the full height of the viewport */
+    background-color: #7EA3CC; /* Replace with your desired background color */
+    font-family: 'Arial', sans-serif; 
+  }
+  
+  .title-page h1 {
+    margin-bottom: 20px; /* Space below the title */
+    font-size: 3rem; /* Large font size for the title */
+    text-transform: uppercase; /* Uppercase title text */
+    background-color: #7EA3CC; /* The header background color */
+    color: #255C99; /* The header text color */
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .title-page button {
+    background-color: #CCAD8F; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /**/
+    padding: 10px 20px; /* Padding inside the button */
+    font-size: 1.5rem; /* Larger font size for button text */
+    cursor: pointer; /* Cursor to pointer to indicate it's clickable */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Optional: adds shadow for depth */
+    transition: background-color 0.3s; /* Smooth transition for button on hover */
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
+
+.title-page button:hover {
+background-color: #255C99; /* Darker background color on hover */
+}
+
+.title-page button img {
+    margin-right: 10px;
+  }

@@ -1,0 +1,7 @@
+.information-details {
+    height: 300px; /* Adjust as needed */
+    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

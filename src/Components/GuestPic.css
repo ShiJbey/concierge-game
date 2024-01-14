@@ -1,0 +1,10 @@
+.guest-pic {
+    width: 80%;
+    height: 150px; /* Adjust as needed */
+    background-color: yellow;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

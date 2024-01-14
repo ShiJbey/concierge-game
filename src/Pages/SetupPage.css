@@ -1,0 +1,47 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color:#7EA3CC; /* Main background color */
+    color: #CCAD8F; /* Text color */
+  }
+  
+  .page-container h1 {
+    margin-bottom: 20px;
+    color:  #255C99/* Title color */
+  }
+  
+  .page-container input,
+  .page-container select {
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 80%;
+    max-width: 300px;
+    border: 2px solid #CCAD8F;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  .page-container select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  }
+
+  .page-container .navigate-button {
+  background-color: #CCAD8F;
+  color: #255C99;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+  }
+  .page-container .navigate-button:hover {
+  background-color: #7EA3CC; /* Hover color change */
+  }

@@ -1,0 +1,58 @@
+.tutorial-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+   /* Main background color */
+    color: #CCAD8F; /* Text color */
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .tutorial-container h1 {
+    background-color: #7EA3CC; /* Title background color */
+    color: #255C99; /* Title text color */
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+  
+  .tutorial-container p {
+    background-color: #CCAD8F; /* Paragraph background color */
+    color: #255C99; /* Paragraph text color */
+    padding: 10px 20px;
+    width: 80%;
+    max-width: 600px; /* Adjust width as needed */
+    margin-bottom: 10px; /* Spacing between paragraphs */
+    border-radius: 5px;
+  }
+  
+  .tutorial-container .continue-button {
+    background-color: #CCAD8F; /* Button background color */
+    color: #255C99; /* Button text color */
+    border:
+  none;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px; /* Adjust based on your spacing needs /
+  outline: none;
+  transition: background-color 0.3s ease; / Smooth transition for hover effect */
+  }
+  
+  .tutorial-container .continue-button:hover {
+  background-color: #7EA3CC; /* Button hover color change */
+  }
+  
+  /* Optional: Add a class for the credits section if it's a separate element */
+  .credits {
+  color: #CCAD8F; 
+  font-size: 12px;
+  position: absolute;
+  bottom: 10px; 
+  width: 100%;
+  text-align: center;
+  }
