@@ -586,31 +586,55 @@ export class Guest {
             }
         }
 
-        if (
-            this.m_membershipLevel >= MembershipLevel.ELITE &&
-            this.m_room != null &&
-            this.m_room.Quality === RoomQualityLevel.BASIC
-        ) {
-            // Request an upgrade
+        if (this.m_room !== null && Math.random() < 0.4) {
+            requestChoices.push(new RoomServiceRequest(this));
         }
 
-        if (
-            this.m_room != null &&
-            this.m_room.Quality === RoomQualityLevel.BASIC
-        ) {
-            // Ask for something to get fixed
+        if (this.m_room !== null && Math.random() < 0.25) {
+            requestChoices.push(new HouseCleaningServiceRequest(this));
         }
 
-        if (
-            this.m_room != null &&
-            this.m_room.Quality === RoomQualityLevel.DELUXE
-        ) {
-            // Ask for spa service
+        if (this.m_room !== null && Math.random() < 0.25) {
+            requestChoices.push(new SpaServiceRequest(this));
         }
 
-        if (this.m_membershipLevel === MembershipLevel.ELITE) {
-            // Ask for something outrageous
+        if (this.m_room !== null && Math.random() < 0.25) {
+            requestChoices.push(new MoreTowelsRequest(this));
         }
+
+        if (this.m_room !== null && Math.random() < 0.25) {
+            requestChoices.push(new ExtraBlanketsRequest(this));
+        }
+
+        if (this.m_room !== null && Math.random() < 0.05) {
+            requestChoices.push(new PoolCleaningRequest(this));
+        }
+
+        // if (
+        //     this.m_membershipLevel >= MembershipLevel.ELITE &&
+        //     this.m_room != null &&
+        //     this.m_room.Quality === RoomQualityLevel.BASIC
+        // ) {
+        //     // Request an upgrade
+        // }
+
+        // if (
+        //     this.m_room != null &&
+        //     this.m_room.Quality === RoomQualityLevel.BASIC
+        // ) {
+        //     // Ask for something to get fixed
+        // }
+
+        // if (
+        //     this.m_room != null &&
+        //     this.m_room.Quality === RoomQualityLevel.DELUXE
+        // ) {
+        //     // Ask for spa service
+        // }
+
+        // if (this.m_membershipLevel === MembershipLevel.ELITE) {
+        //     // Ask for something outrageous
+        // }
 
         if (requestChoices.length > 0) {
             const chosenRequest =
@@ -1074,4 +1098,124 @@ export class ReservationRequest extends GuestRequest {
         const game = this.m_guest.Game;
         game.Hotel.Reputation = game.Hotel.Reputation - 3;
     }
+}
+
+export class RoomServiceRequest extends GuestRequest {
+    constructor(guest: Guest) {
+        super(
+            guest,
+            'Room Service',
+            `${guest.Name} has requested room service.`,
+            'Accept',
+            'Decline'
+        );
+    }
+
+    CanAccept(): boolean {
+        return true;
+    }
+
+    Accept(): void {}
+
+    Decline(): void {}
+}
+
+export class HouseCleaningServiceRequest extends GuestRequest {
+    constructor(guest: Guest) {
+        super(
+            guest,
+            'House Cleaning Service',
+            `${guest.Name} has requested house cleaning service.`,
+            'Accept',
+            'Decline'
+        );
+    }
+
+    CanAccept(): boolean {
+        return true;
+    }
+
+    Accept(): void {}
+
+    Decline(): void {}
+}
+
+export class SpaServiceRequest extends GuestRequest {
+    constructor(guest: Guest) {
+        super(
+            guest,
+            'Spa Service',
+            `${guest.Name} has requested spa service.`,
+            'Accept',
+            'Decline'
+        );
+    }
+
+    CanAccept(): boolean {
+        return true;
+    }
+
+    Accept(): void {}
+
+    Decline(): void {}
+}
+
+export class MoreTowelsRequest extends GuestRequest {
+    constructor(guest: Guest) {
+        super(
+            guest,
+            'Room Service',
+            `${guest.Name} has requested more towels.`,
+            'Accept',
+            'Decline'
+        );
+    }
+
+    CanAccept(): boolean {
+        return true;
+    }
+
+    Accept(): void {}
+
+    Decline(): void {}
+}
+
+export class ExtraBlanketsRequest extends GuestRequest {
+    constructor(guest: Guest) {
+        super(
+            guest,
+            'Extra Blankets',
+            `${guest.Name} has requested extra blankets.`,
+            'Accept',
+            'Decline'
+        );
+    }
+
+    CanAccept(): boolean {
+        return true;
+    }
+
+    Accept(): void {}
+
+    Decline(): void {}
+}
+
+export class PoolCleaningRequest extends GuestRequest {
+    constructor(guest: Guest) {
+        super(
+            guest,
+            'Room Service',
+            `${guest.Name} has requested that the pool be cleaned.`,
+            'Accept',
+            'Decline'
+        );
+    }
+
+    CanAccept(): boolean {
+        return true;
+    }
+
+    Accept(): void {}
+
+    Decline(): void {}
 }
