@@ -33,7 +33,7 @@ const RequestCard: React.FC<RequestCardProps> = (props) => {
                 <div className="col col-3 request-profile-pic-container align-center">
                     <img
                         // src="./assets/characters/placeholder.png"
-                        src="https://placehold.co/256"
+                        src={`/assets/characters/${props.request.Guest.UID}.png`}
                         alt="guest profile pic"
                         className="w-100"
                     ></img>

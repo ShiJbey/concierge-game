@@ -19,7 +19,7 @@ const GuestInfoCard: React.FC<GuestInfoCardProps> = (props) => {
                 <div className="col col-3 request-profile-pic-container">
                     <img
                         // src="./assets/characters/placeholder.png"
-                        src="https://placehold.co/256"
+                        src={`/assets/characters/${props.guest.UID}.png`}
                         alt="guest profile pic"
                         className="w-100"
                     ></img>
