@@ -5,6 +5,8 @@ import SetupPage from './Pages/SetupPage';
 import TutorialPage from './Pages/TutorialPage';
 import ConciergeDashboard from './Components/ConciergeDashboard';
 import { ConciergeGame } from './concierge';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 type AppProps = {
     game: ConciergeGame;
